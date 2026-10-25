@@ -1,0 +1,672 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    direction: rtl;
+    min-height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+/* القائمة الجانبية */
+
+.sidebar {
+    width: 260px;
+    background-color: #1e293b;
+    color: #fff;
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 22px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #38bdf8;
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.menu-item {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 15px;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background-color: #0284c7;
+}
+
+
+/* المحتوى الرئيسي */
+
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #f8fafc;
+    overflow-y: auto;
+}
+
+.app-screen {
+    display: none;
+}
+
+.app-screen.active {
+    display: block;
+}
+
+.header-with-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.screen-header h1 {
+    font-size: 26px;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.screen-header p {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.add-subject-btn {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.add-subject-btn:hover {
+    background-color: #059669;
+}
+
+
+/* كروت المواد */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.main-subject-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e2e8f0;
+    position: relative;
+}
+
+.main-subject-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.delete-subject-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.delete-subject-btn:hover {
+    opacity: 1;
+}
+
+.card-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.main-subject-card h3 {
+    margin-bottom: 8px;
+    color: #0f172a;
+}
+
+.card-stats {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #10b981;
+    transition: width 0.3s;
+}
+
+.pct-text {
+    font-size: 12px;
+    font-weight: bold;
+    color: #059669;
+}
+
+
+/* أزرار وشريط التحكم */
+
+.back-to-main-btn {
+    background-color: #0284c7;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.action-toolbar {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.action-toolbar button,
+.file-upload-label,
+#detail-add-note-btn {
+    background-color: #0f172a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.file-upload-label input {
+    display: none;
+}
+
+
+/* القوائم والمشغل */
+
+.lessons-list,
+.notes-list {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.internal-item {
+    background: white;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+}
+
+.clickable-title {
+    cursor: pointer;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.clickable-title:hover {
+    color: #0284c7;
+}
+
+.item-delete-btn,
+.note-delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.note-item {
+    background: #fef3c7;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #92400e;
+}
+
+.viewer-container {
+    background: #0f172a;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.viewer-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.close-viewer-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.section-divider {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #cbd5e1;
+}
+
+
+/* تنسيقات الجدول الدراسي */
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.day-column {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.day-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0f172a;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #0284c7;
+    text-align: center;
+}
+
+.schedule-list {
+    list-style: none;
+}
+
+.schedule-item {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-right: 4px solid #0284c7;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.schedule-item-info strong {
+    display: block;
+    color: #0f172a;
+    font-size: 14px;
+}
+
+.schedule-item-info span {
+    color: #64748b;
+}
+
+.schedule-delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.schedule-delete-btn:hover {
+    opacity: 1;
+}
+
+
+/* محرر الأكواد والمهام */
+
+.todo-input-box {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.todo-input-box input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+}
+
+.todo-input-box button {
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.todo-list {
+    list-style: none;
+}
+
+.todo-item-row {
+    background: white;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e2e8f0;
+}
+
+#code-textarea {
+    width: 100%;
+    height: 200px;
+    background: #0f172a;
+    color: #38bdf8;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    margin: 10px 0;
+    direction: ltr;
+    text-align: left;
+}
+
+.console-box {
+    background: #1e293b;
+    color: #a7f3d0;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+#console-output {
+    white-space: pre-wrap;
+    font-family: monospace;
+    direction: ltr;
+    text-align: left;
+}
+
+.editor-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.editor-controls select,
+.editor-controls button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+}
+
+
+/* تنسيقات مؤقت البومودورو */
+
+.pomodoro-card {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 16px;
+    max-width: 480px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.pomodoro-modes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.pomo-mode-btn {
+    background-color: #f1f5f9;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+
+.pomo-mode-btn.active {
+    background-color: #0284c7;
+    color: white;
+    font-weight: bold;
+}
+
+.timer-display {
+    font-size: 76px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 15px 0 25px 0;
+    font-family: monospace;
+    letter-spacing: 2px;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.pomo-action-btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.pomo-action-btn:active {
+    transform: scale(0.96);
+}
+
+.pomo-action-btn.start {
+    background-color: #10b981;
+}
+
+.pomo-action-btn.pause {
+    background-color: #f59e0b;
+}
+
+.pomo-action-btn.reset {
+    background-color: #ef4444;
+}
+
+.pomo-action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+/* تحسين عرض الموقع على الهواتف */
+
+@media screen and (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+    }
+    .main-content {
+        width: 100%;
+        min-width: 0;
+        padding: 75px 14px 20px;
+        overflow-x: hidden;
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(280px, 85vw);
+        height: 100dvh;
+        overflow-y: auto;
+        z-index: 1001;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    }
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    .mobile-menu-toggle {
+        display: flex;
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        z-index: 1003;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border: none;
+        border-radius: 10px;
+        background: #0284c7;
+        color: white;
+        font-size: 25px;
+        cursor: pointer;
+    }
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.45);
+    }
+    .mobile-menu-overlay.visible {
+        display: block;
+    }
+    .cards-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+    .schedule-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .header-with-btn {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .screen-header h1 {
+        font-size: 22px;
+        overflow-wrap: anywhere;
+    }
+    .screen-header p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+    .add-subject-btn,
+    .action-toolbar button,
+    .file-upload-label,
+    #detail-add-note-btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+    }
+    .action-toolbar {
+        flex-direction: column;
+    }
+    .todo-input-box {
+        display: flex;
+        flex-direction: column;
+    }
+    .todo-input-box input,
+    .todo-input-box button {
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+    }
+    .editor-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .editor-controls select,
+    .editor-controls button {
+        width: 100%;
+        min-height: 44px;
+    }
+    #code-textarea {
+        width: 100%;
+        min-width: 0;
+        font-size: 14px;
+    }
+    .pomodoro-card {
+        width: 100%;
+        padding: 20px 12px;
+    }
+    .pomodoro-modes,
+    .timer-controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+    }
+    .timer-display {
+        font-size: clamp(44px, 14vw, 68px);
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu-toggle,
+    .mobile-menu-overlay {
+        display: none !important;
+    }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصتي الدراسية الاحترافية</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- مكتبة تشغيل بايثون مباشرة داخل المتصفح -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+</head>
+
+<body>
+    <!-- زر القائمة الخاص بالموبايل -->
+    <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false">
+        ☰
+    </button>
+
+    <!-- خلفية تظهر عند فتح القائمة -->
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+    </div>
+
+    <div class="app-container">
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar">
+            <h2 class="logo">🎓 منصتي</h2>
+            <ul class="sidebar-menu">
+                <li class="menu-item active" id="menu-home-btn">🏠 الرئيسية</li>
+                <li class="menu-item" data-screen="schedule-screen">📅 الجدول الدراسي</li>
+                <li class="menu-item" data-screen="todo-screen">📋 المهام اليومية</li>
+                <li class="menu-item" data-screen="editor-screen">💻 محرر الأكواد</li>
+                <li class="menu-item" data-screen="pomodoro-screen">⏱️ مؤقت التركيز</li>
+            </ul>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+
+            <!-- الشاشة 1: المواد الدراسية الرئيسية -->
+            <section id="subjects-screen" class="app-screen active">
+                <header class="screen-header header-with-btn">
+                    <div>
+                        <h1>المواد الدراسية</h1>
+                        <p>تابعي تقدمكِ في المواد البرمجية أو أضيفي مواد جديدة بسهولة</p>
+                    </div>
+                    <button id="add-subject-btn" class="add-subject-btn">➕ إضافة مادة جديدة</button>
+                </header>
+
+                <div class="cards-grid" id="subjects-grid"></div>
+            </section>
+
+            <!-- الشاشة 2: تفاصيل المادة -->
+            <section id="subject-detail-screen" class="app-screen">
+                <button class="back-to-main-btn" id="back-from-detail-btn">➡️ العودة للمواد الرئيسية</button>
+                <h2 id="detail-subject-title">دروس ومحاضرات المادة</h2>
+
+                <div class="action-toolbar">
+                    <button id="detail-add-lesson-btn">➕ إضافة عنوان درس</button>
+                    <button id="detail-add-yt-btn">▶️ إضافة رابط يوتيوب</button>
+                    <label class="file-upload-label">
+                        📁 إرفاق ملف (فيديو / PDF)
+                        <input type="file" id="detail-file-input" accept="video/*,application/pdf">
+                    </label>
+                </div>
+
+                <div id="viewer-container" class="viewer-container" style="display: none;">
+                    <div class="viewer-header">
+                        <span id="viewer-title"></span>
+                        <button id="close-viewer-btn" class="close-viewer-btn">❌ إغلاق المشغل</button>
+                    </div>
+                    <div id="viewer-body" class="viewer-body"></div>
+                </div>
+
+                <ul class="lessons-list" id="detail-lessons-list"></ul>
+
+                <hr class="section-divider">
+
+                <div class="notes-section">
+                    <h3>📌 ملاحظاتي لهذه المادة</h3>
+                    <button id="detail-add-note-btn">✍️ إضافة ملاحظة جديدة</button>
+                    <ul class="notes-list" id="detail-notes-list"></ul>
+                </div>
+            </section>
+
+            <!-- الشاشة 3: الجدول الدراسي الأسبوعي -->
+            <section id="schedule-screen" class="app-screen">
+                <header class="screen-header header-with-btn">
+                    <div>
+                        <h1>📅 الجدول الدراسي الأسبوعي</h1>
+                        <p>نظمي مواعيد المحاضرات وأوقات الدراسة لكل يوم من أيام الأسبوع</p>
+                    </div>
+                    <button id="add-schedule-btn" class="add-subject-btn">➕ إضافة حصة للجدول</button>
+                </header>
+
+                <div class="schedule-grid" id="schedule-grid"></div>
+            </section>
+            <!-- الشاشة 4: المهام اليومية -->
+            <section id="todo-screen" class="app-screen">
+                <h2>📋 قائمة المهام اليومية</h2>
+                <div class="todo-input-box">
+                    <input type="text" id="todo-input" placeholder="اكتبي مهمتك الدراسية هنا...">
+                    <button id="add-todo-btn">إضافة المهمة 🎯</button>
+                </div>
+                <ul id="todo-list" class="todo-list"></ul>
+            </section>
+
+            <!-- الشاشة 5: محرر الأكواد الشامل -->
+            <section id="editor-screen" class="app-screen">
+                <h2>💻 محرر الأكواد الشامل لتخصص علوم الحاسوب</h2>
+                <div class="editor-controls">
+                    <select id="editor-lang-select">
+                        <option value="cpp">C++ (GCC 12)</option>
+                        <option value="python">Python 3</option>
+                        <option value="java">Java 17</option>
+                        <option value="csharp">C# (.NET)</option>
+                        <option value="js">JavaScript (Node.js)</option>
+                        <option value="sql">SQL (SQLite/PostgreSQL)</option>
+                        <option value="html">HTML / CSS (عرض صفحة)</option>
+                    </select>
+
+                    <!-- أزرار التحكم بحجم الخط -->
+                    <div class="font-size-controls">
+                        <button id="font-increase-btn" title="تكبير الخط">🔍 +</button>
+                        <button id="font-decrease-btn" title="تصغير الخط">🔍 -</button>
+                    </div>
+
+                    <button id="run-btn">▶️ تشغيل الكود</button>
+                </div>
+
+                <textarea id="code-textarea" placeholder="// اكتب الأكواد البرمجية هنا..."></textarea>
+
+                <div class="console-box">
+                    <h4>شاشة المخرجات (Console):</h4>
+                    <div id="html-preview-frame" style="display: none;"></div>
+                    <pre id="console-output">اضغطي "تشغيل الكود" لتنفيذ البرامج...</pre>
+                </div>
+            </section>
+
+            <!-- الشاشة 6: مؤقت التركيز -->
+            <section id="pomodoro-screen" class="app-screen">
+                <header class="screen-header">
+                    <h1>⏱️ مؤقت التركيز (البومودورو)</h1>
+                    <p>نظّمي وقت دراستكِ وخذي استراحات منتظمة لزيادة الإنتاجية</p>
+                </header>
+
+                <div class="pomodoro-card">
+                    <div class="pomodoro-modes">
+                        <button class="pomo-mode-btn active" data-time="1500">جلسة دراسة (25 د)</button>
+                        <button class="pomo-mode-btn" data-time="300">استراحة قصيرة (5 د)</button>
+                        <button class="pomo-mode-btn" data-time="900">استراحة طويلة (15 د)</button>
+                    </div>
+
+                    <div class="timer-display" id="timer-display">25:00</div>
+
+                    <div class="timer-controls">
+                        <button id="pomo-start-btn" class="pomo-action-btn start">بدء المؤقت 🚀</button>
+                        <button id="pomo-pause-btn" class="pomo-action-btn pause" disabled>إيقاف مؤقت ⏸️</button>
+                        <button id="pomo-reset-btn" class="pomo-action-btn reset">إعادة ضبط 🔄</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
